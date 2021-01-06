@@ -25,6 +25,7 @@ public class OrderService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Transactional(readOnly = true)
     public List<OrderDto> findAll() {
         List<Order> orders = orderRepository.findAllOrdersPending();
         return orders.stream().map(order -> new OrderDto(order)).collect(Collectors.toList());
@@ -38,6 +39,14 @@ public class OrderService {
             Product product = productRepository.getOne(p.getId());
             order.getProducts().add(product);
         }
+        order = orderRepository.save(order);
+        return new OrderDto(order);
+    }
+
+    @Transactional
+    public OrderDto setDelivered(Long id){
+        Order order = orderRepository.getOne(id);
+        order.setStatus(OrderStatus.DELIVERED);
         order = orderRepository.save(order);
         return new OrderDto(order);
     }
