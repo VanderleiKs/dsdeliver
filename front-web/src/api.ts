@@ -1,4 +1,5 @@
 import axios from "axios"
+import { OrderPayLoad } from "./Orders/types";
 
 const API_URL = "http://localhost:8080";
 
@@ -11,4 +12,8 @@ export const FetchProducts = () => {
 
 export const fetchLocalMapBox = (local: string) => {
     return axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${local}.json?access_token=${mapboxToken}`)
+}
+
+export const saveOrder = (payLoad: OrderPayLoad) => {
+    return axios.post(`${API_URL}/orders`, payLoad);
 }
