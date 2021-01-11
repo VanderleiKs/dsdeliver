@@ -17,18 +17,20 @@ public class OrderDto implements Serializable {
     private Double longitude;
     private Instant moment;
     private OrderStatus status;
+    private Double total;
 
     Set<ProductDto> productsDto = new HashSet<>();
 
     public OrderDto(){}
 
-    public OrderDto(Long id, String address, Double latitude, Double longitude, Instant moment, OrderStatus status) {
+    public OrderDto(Long id, String address, Double latitude, Double longitude, Instant moment, OrderStatus status, Double total) {
         this.id = id;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.moment = moment;
         this.status = status;
+        this.total = total;
     }
     
     public OrderDto(Order order){
@@ -38,6 +40,7 @@ public class OrderDto implements Serializable {
         longitude = order.getLongitude();
         moment = order.getMoment();
         status = order.getStatus();
+        total = order.getTotal();
         order.getProducts().forEach(product -> productsDto.add(new ProductDto(product)));
     }
 
@@ -89,7 +92,17 @@ public class OrderDto implements Serializable {
         this.status = status;
     }
 
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
     public Set<ProductDto> getProducts() {
         return productsDto;
     }
+
+  
 }
